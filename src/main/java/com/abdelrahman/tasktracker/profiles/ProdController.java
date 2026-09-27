@@ -18,6 +18,7 @@ public class ProdController {
         return "Task Number: " + prodTask.num() + "\n"
                 + "Name: " + prodTask.name() + "\n"
                 + "User: " + prodTask.user() + "\n"
-                + "Description: " + prodTask.description();
+                + "Description: " + prodTask.description() + "\n"
+                + "Prod Controller.";
     }
 }

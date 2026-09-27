@@ -20,6 +20,6 @@ public class DevController {
                 + "Name: " + devTask.name() + "\n"
                 + "User: " + devTask.user() + "\n"
                 + "Description: " + devTask.description() + "\n"
-                + "dev controller: " + devTask.anything();
+                + "Dev Controller: " + devTask.anything();
     }
 }

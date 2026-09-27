@@ -4,6 +4,7 @@ import com.abdelrahman.tasktracker.exceptions.MaxTasksException;
 import com.abdelrahman.tasktracker.exceptions.TaskNotFoundException;
 import com.abdelrahman.tasktracker.models.Task;
 import com.abdelrahman.tasktracker.repo.TaskRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class TaskService {
 
     private final TaskRepo taskRepo;
@@ -32,6 +34,8 @@ public class TaskService {
             throw new MaxTasksException("Maximum number of tasks has been reached");
 
         task.setCompleted(false);
+
+        log.info("Creating task {}", task);
         return taskRepo.save(task);
     }
 
@@ -50,8 +54,10 @@ public class TaskService {
 
     public Task findById(Integer id) {
         Task task = taskRepo.findById(id).orElse(null);
-        if (task == null)
+        if (task == null) {
+            log.error("Task with id {} not found", id);
             throw new TaskNotFoundException("Task with id " + id + " not found");
+        }
 
         return task;
     }
@@ -67,6 +73,7 @@ public class TaskService {
         task.setCompleted(updatedTask.getCompleted() != null && updatedTask.getCompleted());
         task.setDueDate(updatedTask.getDueDate());
 
+        log.info("Updating task #{}, {}", task.getId(), task.getTitle());
         return taskRepo.save(task);
     }
 
@@ -77,6 +84,8 @@ public class TaskService {
             throw new TaskNotFoundException("Task with id " + id + " not found");
 
         task.setCompleted(true);
+
+        log.info("Completing task #{}, {}", task.getId(), task.getTitle());
         taskRepo.save(task);
     }
 
@@ -86,6 +95,7 @@ public class TaskService {
         if (task == null)
             throw new TaskNotFoundException("Task with id " + id + " not found");
 
+        log.info("Deleting task #{}, {}", task.getId(), task.getTitle());
         taskRepo.delete(task);
     }
 }
