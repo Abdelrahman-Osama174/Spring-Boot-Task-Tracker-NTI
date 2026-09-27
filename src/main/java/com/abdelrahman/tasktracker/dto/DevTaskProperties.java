@@ -8,6 +8,7 @@ public record DevTaskProperties(
         String name,
         @DefaultValue("15") int num,
         @DefaultValue("Osama default") String user,
-        String description
+        String description,
+        String anything
 ) {
 }

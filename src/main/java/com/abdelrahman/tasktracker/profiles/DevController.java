@@ -14,11 +14,12 @@ public class DevController {
 
     private final DevTaskProperties devTask;
 
-    @GetMapping("/api/task-data")
+    @GetMapping("/api/dev/data")
     public String getTaskData() {
         return "Task Number: " + devTask.num() + "\n"
                 + "Name: " + devTask.name() + "\n"
                 + "User: " + devTask.user() + "\n"
-                + "Description: " + devTask.description();
+                + "Description: " + devTask.description() + "\n"
+                + "dev controller: " + devTask.anything();
     }
 }
